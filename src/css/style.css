@@ -297,7 +297,7 @@
     color: #111;
 } 
 .create-bg {
-    background-image: url(../app/images/slider4.jpg);
+    background-image: url(../images/slider4.jpg);
     background-size: cover;
     height: 100vh;
 }
@@ -307,14 +307,14 @@
 }
 
 .background-cover {
-    background-image: url(../app/images/slider2.jpg);
+    background-position: center;
     height: 45vh;
     width: 100%;
     background-size: cover;
 }
 
 .background-collection {
-    background-image: url(../app/images/slider3.jpg);
+    background-image: url(../images/slider3.jpg);
     height: 60vh;
     width: 100%;
     background-size: cover;
