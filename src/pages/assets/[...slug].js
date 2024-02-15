@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import "../../app/import.css";
+import Header from "@/app/(primary)/component/header";
 // import dynamic from "next/dynamic";
 // import Loading from "../../app/component/Loader";
 
@@ -41,6 +42,7 @@ export default function Collection() {
 
 	return (
 		<>
+		<Header />
 			<div className="container-max">
 				<div className="row">
 					<div className="col-lg-5 item-wrapper">

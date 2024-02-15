@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import "../../app/import.css";
+import Header from "@/app/(primary)/component/header";
 
 export default function Collection() {
 
@@ -10,6 +11,7 @@ export default function Collection() {
   const [slug, setSlug] = useState();
   const [datalist, setDatalist] = useState([]);
   const [collection, setCollection] = useState();
+  const [details, setDetails] = useState();
 
   const fetchData = async (slug) => {
     let BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
@@ -27,18 +29,55 @@ export default function Collection() {
     setCollection(data);
   };
 
+  const fetchCollectionData = async (slug) => {
+    let BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
+    let url = `${BASE_URL}/api/v2/collections/${slug}/stats`
+    const response = await fetch(url);
+    const data = await response.json();
+    setDetails(data);
+  };
+
   useEffect(() => {
 		if (!router.isReady) return;
 		let slug = router.query.slug
 		setSlug(slug)
 		fetchData(slug)
+    fetchCollectionData(slug)
     fetchCollectionDetails(slug);
 	}, [router.isReady]);
 
   return (
     <>
+    <Header />
       <div className="background-collection"></div>
-      <div className="container-max">
+      <div className="container-max" style={{marginTop:-80}}>
+        <div className="col-lg-12 mt-3">
+          <div className="row">
+          <div className="col-lg-7">
+            <h5 className="text-white text-shadow">{collection?.name}</h5>
+          </div>
+            <div className="col-lg-5">
+            <div className="flex">
+            <div className="text-white">
+              <h5 className="text-shadow">{details?.total?.volume} {details?.total?.floor_price_symbol} </h5>
+              <p className="text-shadow">Total volume</p>
+            </div>
+            <div className="text-white">
+              <h5 className="text-shadow">{details?.total?.floor_price}</h5>
+              <p className="text-shadow">Floor Price</p>
+            </div>
+            <div className="text-white">
+              <h5 className="text-shadow">---</h5>
+              <p className="text-shadow">Best Offer</p>
+            </div>
+            <div className="text-white">
+              <h5 className="text-shadow">{details?.total?.sales}</h5>
+              <p className="text-shadow">Owners</p>
+            </div>
+          </div>
+            </div>
+          </div>
+        </div>
         <div className="col-lg-12">
           <p className="font-weight-bold mt-4 mb-1"></p>
           <p>
@@ -55,7 +94,7 @@ export default function Collection() {
               <div style={{backgroundImage:`url(${item?.image_url?.replace('ikzttp.mypinata.cloud', 'ipfs.io')})`, width: '100%',backgroundSize: 'cover',height: 220}}></div>
               <span className="p-3">
                 <h6>{item.name}</h6>
-                <h5 className="mt-3 font-weight-bold">0.007 ETH</h5>
+                <h5 className="mt-3 font-weight-bold"></h5>
               </span>
             </a>
           ))}

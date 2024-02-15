@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import "../app/import.css";
 import Profile from "@/app/(primary)/component/profile";
+import Header from "@/app/(primary)/component/header";
 
 export default function Created() {
 	const router = useRouter()
@@ -38,6 +39,7 @@ export default function Created() {
 
 	return (
 		<>
+		<Header />
 			<Profile id={slug} />
 			<div className="col-lg-12 mt-4">
 				<div className="row">
