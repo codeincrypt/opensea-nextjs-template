@@ -9,6 +9,7 @@ export default function Collection() {
 
   const router = useRouter()
   const [slug, setSlug] = useState();
+  const [show404, show404Page] = useState(false);
   const [datalist, setDatalist] = useState([]);
   const [collection, setCollection] = useState();
   const [details, setDetails] = useState();
@@ -26,6 +27,9 @@ export default function Collection() {
     let url = `${BASE_URL}/api/v2/collections/${slug}`
     const response = await fetch(url);
     const data = await response.json();
+    if(data.errors){
+      show404Page(true)
+    }
     setCollection(data);
   };
 
@@ -41,14 +45,18 @@ export default function Collection() {
 		if (!router.isReady) return;
 		let slug = router.query.slug
 		setSlug(slug)
+    fetchCollectionDetails(slug);
 		fetchData(slug)
     fetchCollectionData(slug)
-    fetchCollectionDetails(slug);
 	}, [router.isReady]);
 
   return (
     <>
     <Header />
+    {show404 === true ? (
+        <h1>This page is lost.</h1>
+    ) : (
+      <>
       <div className="background-collection"></div>
       <div className="container-max" style={{marginTop:-80}}>
         <div className="col-lg-12 mt-3">
@@ -91,15 +99,17 @@ export default function Collection() {
         <div className="flex" id="nft-list">
           {datalist.map((item, index) => (
             <a className="col5 card mb-4" href={`/assets/${collection?.contracts[0].chain}/${item.contract}/${item.identifier}`} key={index}>
-              <div style={{backgroundImage:`url(${item?.image_url?.replace('ikzttp.mypinata.cloud', 'ipfs.io')})`, width: '100%',backgroundSize: 'cover',height: 220}}></div>
+              <div style={{backgroundImage:`url(${item?.image_url === null ? process.env.NEXT_PUBLIC_DEFAULT_NFT : item?.image_url?.replace('ikzttp.mypinata.cloud', 'ipfs.io')})`, width: '100%',backgroundSize: 'cover',height: 220}}></div>
               <span className="p-3">
-                <h6>{item.name}</h6>
+                <h6>{item.name === null ? "Unnamed" : item.name} - #{item.identifier}</h6>
                 <h5 className="mt-3 font-weight-bold"></h5>
               </span>
             </a>
           ))}
         </div>
       </div>
+      </>
+    )}
     </>
   )
 }

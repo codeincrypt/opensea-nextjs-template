@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import "../../../app/import.css";
+import Link from "next/link";
 
 export default function Profile({ id }) {
 
@@ -31,6 +32,14 @@ export default function Profile({ id }) {
 					<p>
 						{/* <img className="img-icon" src={details?.profile_image_url} /> */}
 						{details?.address?.slice(0, 6)}...{details?.address?.substr(-4, 4)} <span className="text-muted ml-3">Joined {details?.joined_date} </span> </p>
+				</div>
+				<div class="col-lg-12 mt-5">
+					<Link href="/account/collected" class="btn main-btn px-4">Collected 7</Link>
+					<Link href="/" class="btn main-btn px-4">Offer made</Link>
+					<Link href="/" class="btn main-btn px-4">Deals</Link>
+					<Link href="/account/created" class="btn main-btn px-4">Created</Link>
+					<Link href="/" class="btn main-btn px-4">Favourite</Link>
+					<Link href="/" class="btn main-btn px-4">Activity</Link>
 				</div>
 			</div>
 		</>

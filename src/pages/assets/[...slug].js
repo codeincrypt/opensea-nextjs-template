@@ -21,7 +21,7 @@ export default function Collection() {
 		const response = await fetch(url);
 		const data = await response.json();
 		setViewData(data.nft);
-		let replacedImg = data.nft.image_url.replace('ikzttp.mypinata.cloud', 'ipfs.io')
+		let replacedImg = data.nft.image_url ? data.nft.image_url.replace('ikzttp.mypinata.cloud', 'ipfs.io') : process.env.NEXT_PUBLIC_DEFAULT_NFT
 		setImageUrl(replacedImg)
 	};
 
@@ -77,15 +77,19 @@ export default function Collection() {
 								</div>
 								<div className="card-body">
 									<div className="row">
-										{viewdata?.traits.map((item, index) => (
-											<div className="col-4 mb-3" key={index}>
-												<div className="bg-muted">
-													<p className="mb-1 small">{item.trait_type}</p>
-													<p className="mb-1 small font-weight-bold">{item.value}</p>
-													<p className="mb-1 small">Floor : ----- {item.max_value}</p>
+										{viewdata?.traits ? (
+											<>
+											{viewdata?.traits.map((item, index) => (
+												<div className="col-4 mb-3" key={index}>
+													<div className="bg-muted">
+														<p className="mb-1 small">{item.trait_type}</p>
+														<p className="mb-1 small font-weight-bold">{item.value}</p>
+														<p className="mb-1 small">Floor : ----- {item.max_value}</p>
+													</div>
 												</div>
-											</div>
-										))}
+											))}
+											</>
+										):null}
 									</div>
 								</div>
 							</div>
