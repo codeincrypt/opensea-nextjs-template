@@ -26,7 +26,7 @@ export default function Home() {
           <div className="row">
           {datalist.map((item, index) => (
               <a className="col4 card" href={`/collection/${item.collection}`} key={index}>
-                <img src="https://i.seadn.io/gae/lHexKRMpw-aoSyB1WdFBff5yfANLReFxHzt1DOj_sg7mS14yARpuvYcUtsyyx-Nkpk6WTcUPFoG53VnLJezYi8hAs0OxNZwlw6Y-dmI?auto=format&dpr=1&w=136&h=136&fr=1" alt="" />
+                <img src={`${item.image_url === "" ? process.env.NEXT_PUBLIC_DEFAULT_NFT : item.image_url}`} alt="" />
                 <span className="p-3">
                   <h5 className="font-weight-bold h6">{item.name}</h5>
                   <div className="flex">
