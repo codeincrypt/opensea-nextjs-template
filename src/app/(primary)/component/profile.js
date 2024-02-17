@@ -2,8 +2,17 @@
 import { useState, useEffect } from "react";
 import "../../../app/import.css";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
-export default function Profile({ id }) {
+export default function Profile() {
+	const router = useRouter()
+	const [address, setAddress] = useState();
+	useEffect(() => {
+		if (!router.isReady) return;
+		let slug = router.query.slug
+		setAddress(slug)
+		fetchDetails(slug)
+	}, [router.isReady]);
 
 	const [details, setDetails] = useState([]);
 
@@ -15,10 +24,6 @@ export default function Profile({ id }) {
 		const data = await response.json();
 		setDetails(data);
 	}
-
-	useEffect(() => {
-		fetchDetails(id)
-	}, [id]);
 
 	return (
 		<>

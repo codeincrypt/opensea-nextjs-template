@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Profile from "../../component/profile";
+// import Profile from "../(primary)/component/profile";
 
 export default function Created() {
   const [datalist, setDatalist] = useState([]);
@@ -15,17 +15,18 @@ export default function Created() {
   };
 
   useEffect(() => {
-    fetchData();
+    // fetchData();
   }, []);
 
   return (
     <>
       <div className="mb-4"></div>
-      <Profile id={"0xF60f60Fb046C0D25c985469F8c2b91c32EA1B217"} />
+      <h1>collected page</h1>
+      {/* <Profile /> */}
       <div className="container-max" style={{marginTop:0}}>
         <div className="col-lg-12 mt-4">
           <div className="row">
-            {datalist.map((item, index) => (
+            {/* {datalist.map((item, index) => (
               <a className="col4 card" href={`/collection/${item.collection}`}>
                 <img src="https://i.seadn.io/gae/lHexKRMpw-aoSyB1WdFBff5yfANLReFxHzt1DOj_sg7mS14yARpuvYcUtsyyx-Nkpk6WTcUPFoG53VnLJezYi8hAs0OxNZwlw6Y-dmI?auto=format&dpr=1&w=136&h=136&fr=1" alt="" />
                 <span className="p-3">
@@ -42,7 +43,7 @@ export default function Created() {
                   </div>
                 </span>
               </a>
-            ))}
+            ))} */}
           </div>
         </div>
       </div>

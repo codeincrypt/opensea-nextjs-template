@@ -7,17 +7,19 @@ import Header from "@/app/(primary)/component/header";
 // import dynamic from "next/dynamic";
 // import Loading from "../../app/component/Loader";
 
-export default function Collection() {
+export default function Page() {
   const router = useRouter();
   const [slug, setSlug] = useState();
   const [viewdata, setViewData] = useState();
   const [image_url, setImageUrl] = useState();
   const [collection, setCollection] = useState();
-
+	
   const [priceAvailable, setPriceAvailable] = useState(false);
   const [offer, setOffer] = useState();
+  const [ethprice, setEthPrice] = useState();
+  const [usdprice, setUSDPrice] = useState();
 
-  const fetchData = async (slug) => {
+  const fetchNftDetails = async (slug) => {
     let BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
     let url = `${BASE_URL}/api/v2/chain/${slug[0]}/contract/${slug[1]}/nfts/${slug[2]}`;
     const response = await fetch(url);
@@ -27,7 +29,16 @@ export default function Collection() {
       ? data.nft.image_url.replace("ikzttp.mypinata.cloud", "ipfs.io")
       : process.env.NEXT_PUBLIC_DEFAULT_NFT;
     setImageUrl(replacedImg);
+    fetchCollection(data.nft.collection)
     fetchBestOffer(data.nft.collection, slug[2]);
+  };
+
+  const convertToUSD = async (currency, price) => {
+    let url = `https://min-api.cryptocompare.com/data/price?fsym=${currency}&tsyms=USD`;
+    const response = await fetch(url);
+    const data = await response.json();
+		let usd = parseFloat(data.USD)*parseFloat(price)
+    setUSDPrice(usd.toFixed(2)); // data.USD;
   };
 
   const fetchBestOffer = async (slug, identifier) => {
@@ -36,23 +47,36 @@ export default function Collection() {
     const response = await fetch(url);
     const data = await response.json();
     if (Object.keys(data).length === 0 && data.constructor === Object) {
+			console.log('No Offer')
     } else {
       setOffer(data);
+			let price = convert(data.price.current.value, data.price.current.decimals)
+			convertToUSD(data.price.current.currency, price)
+			setEthPrice(price);
       setPriceAvailable(true);
     }
   };
+
+  const fetchCollection = async (collection) => {
+    console.log("collection", collection)
+    let BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+    let url = `${BASE_URL}/api/v2/collections/${collection}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    setCollection(data);
+  };
+
 
   useEffect(() => {
     if (!router.isReady) return;
     let slug = router.query.slug;
     setSlug(slug);
-    fetchData(slug);
+    fetchNftDetails(slug);
   }, [router.isReady]);
 
-	let decimalData = 10
-	Number.prototype.pad = function(n) { return new Array(n).join('0').slice((n || 2) * -1) + this;}
-  
-	return (
+  const convert = (v, d) => parseFloat(v) / parseFloat(10 ** d);
+
+  return (
     <>
       <Header />
       <div className="container-max">
@@ -111,20 +135,11 @@ export default function Collection() {
 
               <div className="border-card mb-4 mt-4">
                 <div className="card-header">
-                  <i className="fa fa-server mr-2"></i> About Monkey
+                  <i className="fa fa-server mr-2"></i> About {collection?.name}
                 </div>
                 <div className="card-body">
                   <p>
-                    {" "}
-                    This is a test NFT collection that helps decentralized
-                    Finance, NFT Finance, Social Finance, and other kinds of
-                    Dapps building on Goerli Testnet.
-                  </p>
-
-                  <p>
-                    You can mint your own at mint function at
-                    https://www.testnetmint.com/ price is 0.01 goerli ether per
-                    one, and max wallet mint is 2.
+                    {collection?.description === "" ? "No description available" : collection?.description}
                   </p>
                 </div>
               </div>
@@ -158,7 +173,7 @@ export default function Collection() {
                       <p>Token Standard :</p>
                     </div>
                     <div className="col2 text-right">
-                      <p>{viewdata?.token_standard}</p>
+                      <p>{viewdata?.token_standard.toUpperCase()}</p>
                     </div>
                   </div>
                   <div className="flex">
@@ -166,7 +181,7 @@ export default function Collection() {
                       <p>Chain :</p>
                     </div>
                     <div className="col2 text-right">
-                      <p>{viewdata?.token_standard}</p>
+                      <p>{collection?.contracts[0].chain.toUpperCase()}</p>
                     </div>
                   </div>
                   <div className="flex">
@@ -182,7 +197,7 @@ export default function Collection() {
                       <p>Creator Earnings :</p>
                     </div>
                     <div className="col2 text-right">
-                      <p>{viewdata?.token_standard}</p>
+                      <p>{collection?.fees[0]?.fee} %</p>
                     </div>
                   </div>
                 </div>
@@ -195,7 +210,7 @@ export default function Collection() {
                 className="a-text"
                 href={`/collection/${viewdata?.collection}`}
               >
-                {viewdata?.collection}
+                {collection?.name}
               </a>
             </p>
             <h3 className="font-weight-bold">{viewdata?.name}</h3>
@@ -208,11 +223,11 @@ export default function Collection() {
               </span>{" "}
             </p>
 
-            <div className="mt-5 mb-4">
+            <div className="mt-4 mb-4">
               <p>2.9K views | 107 favorites</p>
             </div>
             <div className="border-card mb-4">
-              <div className="card-header transparent">
+              {/* <div className="card-header transparent">
                 <p>Sale ends 11 February 2024 at 7:55 am </p>
                 <div className="row ">
                   <div className="col-lg-6 m-0 p-0">
@@ -236,15 +251,15 @@ export default function Collection() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
               {priceAvailable ? (
                 <div className="card-body">
                   <p className="text-muted mb-2">Current price</p>
                   <h2 className="font-weight-bold">
-										{parseFloat(offer?.price?.current?.value)}
-                    {/* {parseFloat(offer?.price?.current?.value) / (parseFloat(offer?.price?.current?.decimals) * parseFloat(10))} {" "} */}{" "}
-                    {offer?.price?.current?.currency}
-                    <span className="h6 text-muted ml-3"> $11,244.08</span>
+                    {ethprice}{" "}{offer?.price?.current?.currency}
+                    <span className="h6 text-muted ml-3">
+                      ${usdprice}
+                    </span>
                   </h2>
 
                   <div className="row mt-3">
@@ -279,7 +294,7 @@ export default function Collection() {
               </div>
               <div className="card-body p-0 m-0">
                 {/* <table className="table"> */}
-                  {/* <tr className="text-muted">
+                {/* <tr className="text-muted">
                     <td>Price</td>
                     <td>USD Price</td>
                     <td>Quantity</td>
@@ -295,7 +310,7 @@ export default function Collection() {
                     <td>From</td>
                     <td></td>
                   </tr> */}
-									{/* {offer?.protocol_data?.parameters?.offer?.map((item, index) => (
+                {/* {offer?.protocol_data?.parameters?.offer?.map((item, index) => (
                   <tr>
                     <td className="h5 font-weight-bold"> ETH</td>
                     <td>$11,244.08</td>
