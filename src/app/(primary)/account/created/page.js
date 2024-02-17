@@ -15,13 +15,13 @@ export default function Created() {
   };
 
   useEffect(() => {
-    fetchData();
+    // fetchData();
   }, []);
 
   return (
     <>
       <div className="mb-4"></div>
-      <Profile />
+      {/* <Profile />
       <div className="container-max" style={{marginTop:0}}>
         <div className="col-lg-12 mt-4">
           <div className="row">
@@ -45,7 +45,7 @@ export default function Created() {
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
