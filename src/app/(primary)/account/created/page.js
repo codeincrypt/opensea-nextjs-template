@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Profile from "../../component/profile";
+import ProfileComp from "../../component/profile";
 
 export default function Created() {
   const [datalist, setDatalist] = useState([]);

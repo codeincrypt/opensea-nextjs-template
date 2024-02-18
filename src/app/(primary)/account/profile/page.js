@@ -1,11 +1,10 @@
-import Image from "next/image";
-import Profile from "../../component/profile";
+import ProfileComp from "../../component/profile";
 
-export default function Propage() {
+export default function Profile() {
   return (
     <>
       <div className="mb-4"></div>
-      <Profile />
+      <ProfileComp />
       <div className="container-max">
         <div className="col-lg-12 mb-5">
           <h3 className="mb-3 font-weight-bold">PROFILE</h3>

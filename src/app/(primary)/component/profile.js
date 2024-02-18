@@ -2,7 +2,8 @@
 import { useState, useEffect } from "react";
 import "../../../app/import.css";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+import Image from 'next/image';
 
 export default function Profile() {
 	const router = useRouter()
@@ -31,7 +32,7 @@ export default function Profile() {
 			<div className="container-max" style={{ marginTop: 15 }}>
 				<div className="col-lg-12">
 					<div className="profile-card">
-						<img src={details?.profile_image_url} alt={details?.username} />
+						<Image src={details?.profile_image_url} alt={details?.username} height={200} width={200} />
 					</div>
 					<h2 className="username">{details?.username === "" ? "Unnamed" : details?.username}</h2>
 					<p>
