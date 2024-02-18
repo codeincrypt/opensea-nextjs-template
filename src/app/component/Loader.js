@@ -1,7 +1,10 @@
-import "../../app/import.css";
+import "./../import.css";
 
 export default function Loader() {
   return (
-    <h1>Loading</h1>
+    <div className="card">
+      <h1 className="text-danger">Loading</h1>
+      
+    </div>
   )
 }

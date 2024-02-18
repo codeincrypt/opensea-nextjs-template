@@ -237,6 +237,10 @@
     margin: 5px;
 }
 
+.item-summary {
+    width: 100%;
+}
+
 .item-summary section {
     padding: 5px;
     border-radius: 10px;

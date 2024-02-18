@@ -1,9 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import "../app/import.css";
-import ProfileComp from "@/app/(primary)/component/profile";
+import "../../app/import.css";
 import Header from "@/app/(primary)/component/header";
+import ProfileComp from "@/app/(primary)/component/profile";
 
 export default function Created() {
   const router = useRouter();
@@ -26,7 +26,7 @@ export default function Created() {
     let url = `${BASE_URL}/api/v2/accounts/${slug}`;
     const response = await fetch(url, options);
     const data = await response.json();
-    fetchData("sepolia", data.address);
+    // fetchData("sepolia", data.address);
     setProfile(data);
   };
 
@@ -45,31 +45,7 @@ export default function Created() {
 			): null}
       <div className="col-lg-12 mt-">
         <div className="container-max" style={{marginTop:20}}>
-          <div className="row" id="nft-list">
-            {datalist?.map((item, index) => (
-              <a className="col5 card mb-4" href={`/assets/${"sepolia"}/${item.contract}/${item.identifier}`} key={index}>
-                <div
-                  style={{
-                    backgroundImage: `url(${
-                      item?.image_url === null
-                        ? process.env.NEXT_PUBLIC_DEFAULT_NFT
-                        : item?.image_url?.replace("ikzttp.mypinata.cloud", "ipfs.io")
-                    })`,
-                    width: "100%",
-                    backgroundSize: "cover",
-                    height: 220,
-                  }}
-                ></div>
-                <span className="p-3">
-                  <h6>
-                    {item.name === null ? "Unnamed" : item.name} - #
-                    {item.identifier}
-                  </h6>
-                  <h5 className="mt-3 font-weight-bold"></h5>
-                </span>
-              </a>
-            ))}
-          </div>
+          <h1>OFFERS</h1>
         </div>
       </div>
     </>
