@@ -5,7 +5,7 @@ import "../app/import.css";
 import ProfileComp from "@/app/(primary)/component/profile";
 import Header from "@/app/(primary)/component/header";
 
-export default function Created() {
+export default function Address() {
   const router = useRouter();
   const [slug, setSlug] = useState();
   const [profile, setProfile] = useState();

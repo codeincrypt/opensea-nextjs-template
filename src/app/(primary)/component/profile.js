@@ -2,34 +2,10 @@
 import { useState } from "react";
 import "../../../app/import.css";
 import Link from "next/link";
-// import { useRouter } from "next/navigation";
-import Image from 'next/image';
 
 export default function Profile(props) {
-	// const router = useRouter()
-	// const [address, setAddress] = useState();
 	const [details, setDetails] = useState(props?.details);
 	const [address, setAddress] = useState(props?.address);
-
-	// const fetchDetails = async (id) => {
-	// 	let BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
-	// 	let url = `${BASE_URL}/api/v2/accounts/${id}`
-	// 	const options = { method: 'GET', headers: { accept: 'application/json' } };
-	// 	const response = await fetch(url, options);
-	// 	const data = await response.json();
-	// 	console.log("data", data);
-	// 	setDetails(data);
-	// }
-
-	// useEffect(() => {
-	// 	if (!router.isReady) return;
-	// 	let slug = router.query.slug
-	// 	console.log("slug", slug);
-	// 	setAddress(slug)
-	// 	fetchDetails(slug)
-	// }, [router.isReady]);
-
-	console.log("details", props);
 
 	return (
 		<>

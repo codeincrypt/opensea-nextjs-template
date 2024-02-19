@@ -1,11 +1,16 @@
 "use client";
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import "../../app/import.css";
 import Header from "@/app/(primary)/component/header";
-// import dynamic from "next/dynamic";
-// import Loading from "../../app/component/Loader";
+import { TbEye } from "react-icons/tb";
+import { BsJustifyLeft } from "react-icons/bs";
+import { PiTagSimpleBold, PiListBulletsBold } from "react-icons/pi";
+import { BiIdCard } from "react-icons/bi";
+import { TbListDetails } from "react-icons/tb";
+import { SlGraph } from "react-icons/sl";
+import { LuListTodo } from "react-icons/lu";
+import { TbClockHour5 } from "react-icons/tb";
 
 export default function Page() {
   const router = useRouter();
@@ -13,7 +18,7 @@ export default function Page() {
   const [viewdata, setViewData] = useState();
   const [image_url, setImageUrl] = useState();
   const [collection, setCollection] = useState();
-	
+
   const [priceAvailable, setPriceAvailable] = useState(false);
   const [offer, setOffer] = useState();
   const [ethprice, setEthPrice] = useState();
@@ -37,7 +42,7 @@ export default function Page() {
     let url = `https://min-api.cryptocompare.com/data/price?fsym=${currency}&tsyms=USD`;
     const response = await fetch(url);
     const data = await response.json();
-		let usd = parseFloat(data.USD)*parseFloat(price)
+    let usd = parseFloat(data.USD) * parseFloat(price)
     setUSDPrice(usd.toFixed(2)); // data.USD;
   };
 
@@ -47,12 +52,12 @@ export default function Page() {
     const response = await fetch(url);
     const data = await response.json();
     if (Object.keys(data).length === 0 && data.constructor === Object) {
-			console.log('No Offer')
+      console.log('No Offer')
     } else {
       setOffer(data);
-			let price = convert(data.price.current.value, data.price.current.decimals)
-			convertToUSD(data.price.current.currency, price)
-			setEthPrice(price);
+      let price = convert(data.price.current.value, data.price.current.decimals)
+      convertToUSD(data.price.current.currency, price)
+      setEthPrice(price);
       setPriceAvailable(true);
     }
   };
@@ -100,7 +105,7 @@ export default function Page() {
               </section>
               <div className="border-card mb-4 mt-4">
                 <div className="card-header">
-                  <i className="fa fa-server mr-2"></i> Description
+                  <BsJustifyLeft className="h5 mb-0" /> Description
                 </div>
                 <div className="card-body">
                   <p>{viewdata?.description}</p>
@@ -108,7 +113,7 @@ export default function Page() {
               </div>
               <div className="border-card mb-4 mt-4">
                 <div className="card-header">
-                  <i className="fa fa-server mr-2"></i> Traits
+                  <PiTagSimpleBold className="h5 mb-0" /> Traits
                 </div>
                 <div className="card-body">
                   <div className="row">
@@ -135,7 +140,7 @@ export default function Page() {
 
               <div className="border-card mb-4 mt-4">
                 <div className="card-header">
-                  <i className="fa fa-server mr-2"></i> About {collection?.name}
+                  <BiIdCard className="h5 mb-0" /> About {collection?.name}
                 </div>
                 <div className="card-body">
                   <p>
@@ -146,15 +151,15 @@ export default function Page() {
 
               <div className="border-card mb-4 mt-4">
                 <div className="card-header">
-                  <i className="fa fa-server mr-2"></i> Details
+                  <TbListDetails className="h5 mb-0" /> Details
                 </div>
                 <div className="card-body">
                   <div className="flex">
                     <div className="col2">
-                      <p>Contract Address :</p>
+                      <p className="mb-0">Contract Address :</p>
                     </div>
                     <div className="col2 text-right">
-                      <p>
+                      <p className="mb-0">
                         {viewdata?.contract.slice(0, 6)}...
                         {viewdata?.contract.substr(-4, 4)}
                       </p>
@@ -162,42 +167,42 @@ export default function Page() {
                   </div>
                   <div className="flex">
                     <div className="col2">
-                      <p>Token ID :</p>
+                      <p className="mb-0">Token ID :</p>
                     </div>
                     <div className="col2 text-right">
-                      <p>{viewdata?.identifier}</p>
+                      <p className="mb-0">{viewdata?.identifier}</p>
                     </div>
                   </div>
                   <div className="flex">
                     <div className="col2">
-                      <p>Token Standard :</p>
+                      <p className="mb-0">Token Standard :</p>
                     </div>
                     <div className="col2 text-right">
-                      <p>{viewdata?.token_standard.toUpperCase()}</p>
+                      <p className="mb-0">{viewdata?.token_standard.toUpperCase()}</p>
                     </div>
                   </div>
                   <div className="flex">
                     <div className="col2">
-                      <p>Chain :</p>
+                      <p className="mb-0">Chain :</p>
                     </div>
                     <div className="col2 text-right">
-                      <p>{collection?.contracts[0].chain.toUpperCase()}</p>
+                      <p className="mb-0">{collection?.contracts[0].chain.toUpperCase()}</p>
                     </div>
                   </div>
                   <div className="flex">
                     <div className="col2">
-                      <p>Last Updated :</p>
+                      <p className="mb-0">Last Updated :</p>
                     </div>
                     <div className="col2 text-right">
-                      <p>{viewdata?.updated_at}</p>
+                      <p className="mb-0">{viewdata?.updated_at}</p>
                     </div>
                   </div>
                   <div className="flex">
                     <div className="col2">
-                      <p>Creator Earnings :</p>
+                      <p className="mb-0">Creator Earnings :</p>
                     </div>
                     <div className="col2 text-right">
-                      <p>{collection?.fees[0]?.fee} %</p>
+                      <p className="mb-0">{collection?.fees[0]?.fee} %</p>
                     </div>
                   </div>
                 </div>
@@ -224,7 +229,7 @@ export default function Page() {
             </p>
 
             <div className="mt-4 mb-4">
-              <p>2.9K views | 107 favorites</p>
+              <p><TbEye className="h5 mb-0" /> 2.9K views | 107 favorites</p>
             </div>
             <div className="border-card mb-4">
               {/* <div className="card-header transparent">
@@ -279,15 +284,17 @@ export default function Page() {
             </div>
             <div className="border-card">
               <div className="card-header">
-                <i className="fa fa-server mr-2"></i> Price History
+                <SlGraph className="h5 mb-0" /> Price History
               </div>
               <div className="card-body p-5 text-center">
-                <img src="https://testnets.opensea.io/static/images/empty-bids.svg" />
+                <TbClockHour5 className="h2" />
+                <p className="mb-1">No events have occurred yet</p>
+                <p>Check back later.</p>
               </div>
             </div>
             <div className="border-card mt-4">
               <div className="card-header">
-                <i className="fa fa-server mr-2"></i> Listings
+                <LuListTodo className="h5 mb-0" /> Listings
               </div>
               <div className="card-body p-5 text-center">
                 <img src="https://testnets.opensea.io/static/images/empty-bids.svg" />
@@ -327,7 +334,7 @@ export default function Page() {
             </div>
             <div className="border-card mt-4">
               <div className="card-header">
-                <i className="fa fa-server mr-2"></i> Offers
+                <PiListBulletsBold className="h5 mb-0" /> Offers
               </div>
               <div className="card-body p-5 text-center">
                 <img src="https://testnets.opensea.io/static/images/empty-bids.svg" />

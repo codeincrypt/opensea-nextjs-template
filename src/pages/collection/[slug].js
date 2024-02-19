@@ -57,17 +57,20 @@ export default function Collection() {
         <h1>This page is lost.</h1>
     ) : (
       <>
-      <div className="background-collection"></div>
+      <div className="background-collection" style={{ backgroundImage: `url(${collection?.banner_image_url === "" ? process.env.NEXT_PUBLIC_DEFAULT_IMAGE : collection?.banner_image_url}), linear-gradient(#ffffff, black)` }}></div>
       <div className="container-max" style={{marginTop:-80}}>
         <div className="col-lg-12 mt-3">
           <div className="row">
           <div className="col-lg-7">
-            <h5 className="text-white text-shadow">{collection?.name}</h5>
+            <div className="collection-img">
+            <img src={collection?.image_url === "" ? process.env.NEXT_PUBLIC_DEFAULT_NFT : collection?.image_url + "?auto=format"} alt={collection?.name} />
+            </div>
+            <h4 className="text-white text-shadow mt-3">{collection?.name}</h4>
           </div>
             <div className="col-lg-5">
             <div className="flex">
             <div className="text-white">
-              <h5 className="text-shadow">{details?.total?.volume} {details?.total?.floor_price_symbol} </h5>
+              <h5 className="text-shadow">{details?.total?.volume.toFixed(2)} {details?.total?.floor_price_symbol} </h5>
               <p className="text-shadow">Total volume</p>
             </div>
             <div className="text-white">
@@ -75,8 +78,12 @@ export default function Collection() {
               <p className="text-shadow">Floor Price</p>
             </div>
             <div className="text-white">
-              <h5 className="text-shadow">---</h5>
+              <h5 className="text-shadow">--</h5>
               <p className="text-shadow">Best Offer</p>
+            </div>
+            <div className="text-white">
+              <h5 className="text-shadow">--</h5>
+              <p className="text-shadow">Listed</p>
             </div>
             <div className="text-white">
               <h5 className="text-shadow">{details?.total?.sales}</h5>

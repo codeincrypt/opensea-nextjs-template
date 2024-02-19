@@ -318,7 +318,7 @@
 }
 
 .background-collection {
-    background-image: url(../images/slider3.jpg);
+    background-position: center;
     height: 60vh;
     width: 100%;
     background-size: cover;
@@ -484,4 +484,26 @@
 
 .text-shadow {
     text-shadow: 0px 0px 5px #5c5c5c;
+}
+
+.collection-img {
+    width: 100px;
+    overflow: hidden;
+    height: 100px;
+    margin-top: -100px;
+    border-radius: 10px;
+}
+
+.collection-img img {
+    width: 100%;
+}
+
+.footer {
+    color: rgb(255, 255, 255);
+    height: auto;
+    -webkit-box-pack: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    background-color: rgb(24, 104, 183);
 }

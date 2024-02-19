@@ -1,5 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
+import { FaRegUserCircle } from "react-icons/fa";
+import { MdOutlineShoppingCart } from "react-icons/md";
+import { MdWallet } from "react-icons/md";
+
 export default function Header() {
 
   const [login, setLogin] = useState(false);
@@ -55,7 +59,7 @@ export default function Header() {
           {login === true ? (
             <>
               <a className="btn main-btn">
-                <i className="px-2 fa fa-credit-card"></i>
+              <MdWallet className="h4 mb-0" /> 
                 1.439 ETH <span className="text-muted px-1">|</span>
                 0.2 WETH
               </a>
@@ -66,17 +70,16 @@ export default function Header() {
           ) : (
             <>
               <a className="btn main-btn">
-                <i className="px-2 fa fa-credit-card"></i>
-                Login
+              <MdWallet className="h4 mb-0" /> Login
               </a>
               <a className="btn main-btn" href="/account/created">
-              <i className="px-2 fa fa-user"></i>
+              <FaRegUserCircle className="h4 mb-0" />
               </a>
             </>
           )}
 
           <a className="btn main-btn">
-            <i className="px-2 fa fa-shopping-cart"></i>
+          <MdOutlineShoppingCart className="h4 mb-0" />
           </a>
         </span>
       </nav>
