@@ -1,5 +1,4 @@
 "use client";
-import { useState, useEffect } from "react";
 export default function Footer() {
 
   return (
@@ -20,7 +19,7 @@ export default function Footer() {
         <div className="row">
           <div className="col-lg-5">
             <h5 className="font-weight-bold">OpenSea</h5>
-            <p>The world's first and largest digital marketplace for crypto collectibles and non-fungible tokens (NFTs). Buy, sell, and discover exclusive digital items</p>
+            <p>The world&apos;s first and largest digital marketplace for crypto collectibles and non-fungible tokens (NFTs). Buy, sell, and discover exclusive digital items</p>
           </div>
           <div className="col-lg-1"></div>
           <div className="col-lg-5">

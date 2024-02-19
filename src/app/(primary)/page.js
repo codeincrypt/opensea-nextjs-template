@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-
+import Link from "next/link"
 export default function Home() {
 	const [datalist, setDatalist] = useState([]);
 
@@ -64,77 +64,77 @@ export default function Home() {
         <div className="col-lg-12 mb-5">
           <h3 className="mb-3 font-weight-bold">NFT 101</h3>
           <div className="row">
-            <a className="col6 card" href="/">
+            <Link className="col6 card" href="/">
               <img src="https://testnets.opensea.io/static/images/learn-center//what-is-nft.png" alt="" />
               <span className="p-3">
                 <h6>What is an NFTs</h6>
               </span>
-            </a>
-            <a className="col6 card" href="/">
+            </Link>
+            <Link className="col6 card" href="/">
               <img src="https://testnets.opensea.io/static/images/learn-center//how-to-buy-nft.png" alt="" />
               <span className="p-3">
                 <h6>How to buy an NFT</h6>
               </span>
-            </a>
-            <a className="col6 card" href="/">
+            </Link>
+            <Link className="col6 card" href="/">
               <img src="https://testnets.opensea.io/static/images/learn-center//what-is-minting.png" alt="" />
               <span className="p-3">
                 <h6>What is minting ?</h6>
               </span>
-            </a>
-            <a className="col6 card" href="/">
+            </Link>
+            <Link className="col6 card" href="/">
               <img src="https://testnets.opensea.io/static/images/learn-center//stay-protected-web3.png" alt="" />
               <span className="p-3">
                 <h6>How to stay protected...</h6>
               </span>
-            </a>
-            <a className="col6 card" href="/">
+            </Link>
+            <Link className="col6 card" href="/">
               <img src="https://testnets.opensea.io/static/images/learn-center//how-to-create-nft.png" alt="" />
               <span className="p-3">
                 <h6>PFPs</h6>
               </span>
-            </a>
-            <a className="col6 card" href="/">
+            </Link>
+            <Link className="col6 card" href="/">
               <img src="https://testnets.opensea.io/static/images/learn-center//how-to-sell-nft.png" alt="" />
               <span className="p-3">
                 <h6>How to sell an NFT</h6>
               </span>
-            </a>
+            </Link>
           </div>
         </div>
         <div className="col-lg-12 mb-5">
           <h3 className="mb-3 font-weight-bold">Explore Categories</h3>
           <div className="row">
-            <a className="col5 card" href="/category/art">
+            <Link className="col5 card" href="/category/art">
               <img src="https://opensea.io/static/images/categories/maverick-art.png" alt="" />
               <span className="p-3">
                 <h6>Art</h6>
               </span>
-            </a>
-            <a className="col5 card" href="/category/gaming">
+            </Link>
+            <Link className="col5 card" href="/category/gaming">
               <img src="https://opensea.io/static/images/categories/maverick-gaming.png" alt="" />
               <span className="p-3">
                 <h6>Gaming</h6>
               </span>
-            </a>
-            <a className="col5 card" href="/category/memberships">
+            </Link>
+            <Link className="col5 card" href="/category/memberships">
               <img src="https://opensea.io/static/images/categories/maverick-membership.png" alt="" />
               <span className="p-3">
                 <h6>Memberships</h6>
               </span>
-            </a>
-            <a className="col5 card" href="/category/music">
+            </Link>
+            <Link className="col5 card" href="/category/music">
               <img src="https://opensea.io/static/images/categories/maverick-music.png" alt="" />
               <span className="p-3">
                 <h6>Music</h6>
               </span>
-            </a>
-            <a className="col5 card" href="/category/ppfs">
+            </Link>
+            <Link className="col5 card" href="/category/ppfs">
               <img src="https://opensea.io/static/images/categories/maverick-pfps.png" alt="" />
               <span className="p-3">
                 <h6>PFPs</h6>
               </span>
-            </a>
+            </Link>
           </div>
 
         </div>
