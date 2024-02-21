@@ -35,7 +35,7 @@ export default function Created() {
     let slug = router.query.address;
     setSlug(slug);
     fetchDetails(slug);
-  }, [router.isReady]);
+  }, [fetchDetails, router.isReady]);
 
   return (
     <>

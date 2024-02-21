@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import "../../app/import.css";
 import Header from "@/app/(primary)/component/header";
 import { TbEye } from "react-icons/tb";
@@ -226,20 +227,20 @@ export default function Page() {
           </div>
           <div className="col-lg-7 item-main">
             <p className="mb-3">
-              <a
+              <Link
                 className="a-text"
                 href={`/collection/${viewdata?.collection}`}
               >
                 {collection?.name}
-              </a>
+              </Link>
             </p>
             <h3 className="font-weight-bold">{viewdata?.name}</h3>
             <p>
               Owned by{" "}
               <span>
-                <a className="a-text" href={`/${viewdata?.creator}`}>
+                <Link className="a-text" href={`/${viewdata?.creator}`}>
                   {viewdata?.creator.slice(2, 8)}
-                </a>
+                </Link>
               </span>{" "}
             </p>
 

@@ -35,7 +35,7 @@ export default function Deploycontract() {
             <div className="col-lg-1"></div>
             <div className="col-lg-3 mutedcard">
               <h6 className="font-weight-bold">
-                After you deploy your contract you'll be able to:
+                After you deploy your contract you&apos;ll be able to:
               </h6>
               <div className="ml-4 mt-4">
                 <p className="font-weight-bold mb-0">

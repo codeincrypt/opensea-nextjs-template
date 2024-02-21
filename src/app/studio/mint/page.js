@@ -1,6 +1,7 @@
 "use client"
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Mint() {
   function removeImg() {
@@ -119,7 +120,7 @@ export default function Mint() {
             <div className="col-lg-5">
               <div className="form-group mt-4">
                 <h6 className="font-weight-bold">Collection *</h6>
-                <a href="#" className="nones">
+                <Link href="#" className="nones">
                   <div className="collection-box">
                     <div className="row px-2">
                       <div className="col-lg-2 ">
@@ -135,7 +136,7 @@ export default function Mint() {
                       </div>
                     </div>
                   </div>
-                </a>
+                </Link>
               </div>
 
               <div className="form-group mt-4">

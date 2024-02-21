@@ -5,6 +5,7 @@ import "../app/import.css";
 import ProfileComp from "@/app/(primary)/component/profile";
 import Header from "@/app/(primary)/component/header";
 import Footer from "@/app/(primary)/component/footer";
+import Link from "next/link";
 
 export default function Address() {
   const router = useRouter();
@@ -48,7 +49,7 @@ export default function Address() {
         <div className="container-max" style={{marginTop:20}}>
           <div className="row" id="nft-list">
             {datalist?.map((item, index) => (
-              <a className="col5 card mb-4" href={`/assets/${"sepolia"}/${item.contract}/${item.identifier}`} key={index}>
+              <Link className="col5 card mb-4" href={`/assets/${"sepolia"}/${item.contract}/${item.identifier}`} key={index}>
                 <div
                   style={{
                     backgroundImage: `url(${
@@ -68,7 +69,7 @@ export default function Address() {
                   </h6>
                   <h5 className="mt-3 font-weight-bold"></h5>
                 </span>
-              </a>
+              </Link>
             ))}
           </div>
         </div>

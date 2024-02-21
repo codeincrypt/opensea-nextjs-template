@@ -49,7 +49,7 @@ export default function Collection() {
     fetchCollectionDetails(slug);
 		fetchData(slug)
     fetchCollectionData(slug)
-	}, [router.isReady]);
+	}, [fetchCollectionData, fetchData, fetchCollectionDetails, router.isReady]);
 
   return (
     <>
@@ -106,13 +106,13 @@ export default function Collection() {
 
         <div className="flex" id="nft-list">
           {datalist.map((item, index) => (
-            <a className="col5 card mb-4" href={`/assets/${collection?.contracts[0].chain}/${item.contract}/${item.identifier}`} key={index}>
+            <Link className="col5 card mb-4" href={`/assets/${collection?.contracts[0].chain}/${item.contract}/${item.identifier}`} key={index}>
               <div style={{backgroundImage:`url(${item?.image_url === null ? process.env.NEXT_PUBLIC_DEFAULT_NFT : item?.image_url?.replace('ikzttp.mypinata.cloud', 'ipfs.io')})`, width: '100%',backgroundSize: 'cover',height: 220}}></div>
               <span className="p-3">
                 <h6>{item.name === null ? "Unnamed" : item.name} - #{item.identifier}</h6>
                 <h5 className="mt-3 font-weight-bold"></h5>
               </span>
-            </a>
+            </Link>
           ))}
         </div>
       </div>
