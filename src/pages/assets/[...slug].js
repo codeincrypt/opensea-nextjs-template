@@ -115,7 +115,7 @@ export default function Page() {
                 </header>
 
                 <div className="item-summary-img">
-                  <img src={image_url} />
+                  <img src={image_url} alt="nft" />
                 </div>
               </section>
               <div className="border-card mb-4 mt-4">
@@ -375,7 +375,7 @@ export default function Page() {
                     <th>Date</th>
                   </tr>
                 {activity?.map((item, index) => (
-                  <tr>
+                  <tr key={index}>
                     <td> {item.order_type} </td>
                     <td>{item.order_type} </td>
                     <td>{item.from_address?.slice(0, 6)}...

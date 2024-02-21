@@ -1,41 +1,41 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FaRegUserCircle } from "react-icons/fa";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { MdWallet } from "react-icons/md";
+import Link from "next/link";
 
 export default function Header() {
-
   const [login, setLogin] = useState(false);
   return (
     <div id="header">
       <nav className="navbar navbar-expand-lg navbar-light nav-pad">
-        <a href="/">
+        <Link href="/">
           <img
             src="https://altcoinsbox.com/wp-content/uploads/2023/03/full-opensea-logo.png"
             alt=""
             className="logo"
           />
-        </a>
+        </Link>
 
         <ul className="navbar-nav mr-auto ml-4">
           <li className="nav-item mx-2">
-            <a className="text-dark font-weight-bold nav-link" href="/drops">
+            <Link className="text-dark font-weight-bold nav-link" href="/drops">
               Drops
-            </a>
+            </Link>
           </li>
           <li className="nav-item mx-2">
-            <a className="text-dark font-weight-bold nav-link" href="/stats">
+            <Link className="text-dark font-weight-bold nav-link" href="/stats">
               Stats
-            </a>
+            </Link>
           </li>
           <li className="nav-item mx-2">
-            <a
+            <Link
               className="text-dark font-weight-bold nav-link"
               href="/studio/create"
             >
               Create
-            </a>
+            </Link>
           </li>
         </ul>
 
@@ -58,29 +58,29 @@ export default function Header() {
         <span className="navbar-text">
           {login === true ? (
             <>
-              <a className="btn main-btn">
-              <MdWallet className="h4 mb-0" /> 
+              <button className="btn main-btn">
+                <MdWallet className="h4 mb-0" />
                 1.439 ETH <span className="text-muted px-1">|</span>
                 0.2 WETH
-              </a>
-              <a className="btn main-btn" href="/account/created">
+              </button>
+              <Link className="btn main-btn" href="/account/created">
                 <img src="https://i.seadn.io/s/raw/files/d41a9f52c66cc36c269d49f4b6c76651.jpg?auto=format&dpr=1&w=1920" />
-              </a>
+              </Link>
             </>
           ) : (
             <>
-              <a className="btn main-btn">
-              <MdWallet className="h4 mb-0" /> Login
-              </a>
-              <a className="btn main-btn" href="/account/created">
-              <FaRegUserCircle className="h4 mb-0" />
-              </a>
+              <button className="btn main-btn">
+                <MdWallet className="h4 mb-0" /> Login
+              </button>
+              <Link className="btn main-btn" href="/account/created">
+                <FaRegUserCircle className="h4 mb-0" />
+              </Link>
             </>
           )}
 
-          <a className="btn main-btn">
-          <MdOutlineShoppingCart className="h4 mb-0" />
-          </a>
+          <button className="btn main-btn">
+            <MdOutlineShoppingCart className="h4 mb-0" />
+          </button>
         </span>
       </nav>
     </div>
