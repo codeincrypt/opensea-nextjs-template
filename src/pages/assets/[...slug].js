@@ -11,12 +11,15 @@ import { TbListDetails } from "react-icons/tb";
 import { SlGraph } from "react-icons/sl";
 import { LuListTodo } from "react-icons/lu";
 import { TbClockHour5 } from "react-icons/tb";
+import { PiArrowsDownUpBold } from "react-icons/pi";
+import Footer from "@/app/(primary)/component/footer";
 
 export default function Page() {
   const router = useRouter();
   const [slug, setSlug] = useState();
   const [viewdata, setViewData] = useState();
   const [image_url, setImageUrl] = useState();
+  const [activity, setActivity] = useState();
   const [collection, setCollection] = useState();
 
   const [priceAvailable, setPriceAvailable] = useState(false);
@@ -51,6 +54,7 @@ export default function Page() {
     let url = `${BASE_URL}/api/v2/listings/collection/${slug}/nfts/${identifier}/best`;
     const response = await fetch(url);
     const data = await response.json();
+    console.log("fetchBestOffer", data)
     if (Object.keys(data).length === 0 && data.constructor === Object) {
       console.log('No Offer')
     } else {
@@ -71,12 +75,23 @@ export default function Page() {
     setCollection(data);
   };
 
+  const fetchItemActivity = async (slug) => {
+    console.log("collection", collection)
+    let BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+    let url = `${BASE_URL}/api/v2/events/chain/${slug[0]}/contract/${slug[1]}/nfts/${slug[2]}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log("data", data);
+    setActivity(data.asset_events);
+  };
+
 
   useEffect(() => {
     if (!router.isReady) return;
     let slug = router.query.slug;
     setSlug(slug);
     fetchNftDetails(slug);
+    fetchItemActivity(slug)
   }, [router.isReady]);
 
   const convert = (v, d) => parseFloat(v) / parseFloat(10 ** d);
@@ -342,7 +357,46 @@ export default function Page() {
             </div>
           </div>
         </div>
+
+        <div className="row">
+          <div className="col-lg-12">
+          <div className="border-card">
+              <div className="card-header">
+                <PiArrowsDownUpBold className="h5 mb-0" /> Item Activity
+              </div>
+              {Array.isArray(activity) && activity.length > 0 ? (
+              <div className="card-body p-0 m-0">
+                <table className="table p-3" >
+                <tr>
+                    <th>Event</th>
+                    <th>Price</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Date</th>
+                  </tr>
+                {activity?.map((item, index) => (
+                  <tr>
+                    <td> {item.order_type} </td>
+                    <td>{item.order_type} </td>
+                    <td>{item.from_address?.slice(0, 6)}...
+                        {item.from_address?.substr(-4, 4)}</td>
+                        <td>{item.to_address?.slice(0, 6)}...
+                        {item.to_address?.substr(-4, 4)}</td>
+                    <td>{item.event_timestamp}</td>
+                  </tr>
+									))}
+                </table>
+              </div>
+              ) : (
+              <div className="card-body p-5 text-center">
+                <img src="https://testnets.opensea.io/static/images/empty-bids.svg" />
+              </div>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
+      <Footer />
     </>
   );
 }

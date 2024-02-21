@@ -3,6 +3,7 @@ import Header from "@/app/(primary)/component/header";
 import { useRouter } from "next/router";
 import ProfileComp from "@/app/(primary)/component/profile";
 import { useState, useEffect } from "react";
+import Footer from "@/app/(primary)/component/footer";
 
 export default function Created() {
   const router = useRouter();
@@ -50,6 +51,7 @@ export default function Created() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

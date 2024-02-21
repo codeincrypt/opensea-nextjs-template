@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import "../../app/import.css";
 import Header from "@/app/(primary)/component/header";
+import Footer from "@/app/(primary)/component/footer";
 
 export default function Collection() {
 
@@ -117,6 +118,7 @@ export default function Collection() {
       </div>
       </>
     )}
+    <Footer />
     </>
   )
 }

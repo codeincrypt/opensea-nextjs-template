@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import "../app/import.css";
 import ProfileComp from "@/app/(primary)/component/profile";
 import Header from "@/app/(primary)/component/header";
+import Footer from "@/app/(primary)/component/footer";
 
 export default function Address() {
   const router = useRouter();
@@ -72,6 +73,7 @@ export default function Address() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

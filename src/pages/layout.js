@@ -1,3 +1,4 @@
+import Footer from "@/app/(primary)/component/footer";
 import Header from "@/app/(primary)/component/header";
 
 // export const metadata = {
@@ -11,6 +12,7 @@ export default function Layout({ children }) {
     <body>
       <Header />
       {children}
+      <Footer />
     </body>
   </html>
   )
