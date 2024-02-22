@@ -1,119 +1,112 @@
 "use client"
-import { useEffect, useState } from "react";
-import Image from "next/image";
+import { useRef, useState } from "react";
 import Link from "next/link";
+import { FiArrowLeft } from "react-icons/fi";
+import { BsTrash } from "react-icons/bs";
 
 export default function Mint() {
-  function removeImg() {
-    const textSection = document.getElementById("text-section");
-    const previewContainer = document.getElementById("dragdrop");
-    const removeBtn = document.getElementById("remove-btn");
-    textSection.style.display = "";
-    removeBtn.style.display = "none";
-    previewContainer.style.backgroundImage = "url()";
-  }
+  const fileInput = useRef(null);
 
+  const [removeImage, setRemoveImage] = useState(false);
   const [highlight, setHighlight] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);
   const [showTextSection, setShowTextSection] = useState(true);
 
-  const handleDragEnter = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setHighlight(true);
-  };
+  function removeImg() {
+    const textSection = document.getElementById("text-section");
+    const previewContainer = document.getElementById("dragdrop");
+    textSection.style.display = "";
+    previewContainer.style.backgroundImage = "url()";
+  }
 
-  const handleDragOver = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
-
-  const handleDragLeave = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setHighlight(false);
-  };
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setHighlight(false);
-    const files = e.dataTransfer.files;
-    handleFiles(files);
-  };
-
-  const handleFileInputChange = (e) => {
-    const files = e.target.files;
-    handleFiles(files);
-  };
-
-  const handleFiles = (files) => {
+  function handleFiles(files) {
     if (!files || files.length === 0) return;
 
-    const file = files[0];
-    if (file.type.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setPreviewImage(reader.result);
-        setShowTextSection(false);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      console.log(`${file.name} is not a valid image file.`);
-    }
-  };
+    [...files].forEach((file) => {
+      if (file.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const previewContainer = document.getElementById("dragdrop");
+          const textSection = document.getElementById("text-section");
+          const removeBtn = document.getElementById("remove-btn");
+
+          previewContainer.style.backgroundImage = `url(${reader.result})`;
+          previewContainer.style.backgroundSize = "cover";
+          textSection.style.display = "none";
+          setRemoveImage(true)
+        };
+        reader.readAsDataURL(file);
+      } else {
+        console.log(`${file.name} is not a valid image file.`);
+      }
+    });
+  }
+
+  function handleFileInputChange(e) {
+    const files = e.target.files;
+    handleFiles(files);
+  }
+
+  function handleDragEvents(e) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
+  function handleDrop(e) {
+    const files = e.dataTransfer.files;
+    handleFiles(files);
+  }
 
   return (
     <>
-      <div className="mb-4"></div>
-      <div className="container-max">
+      {/* <div className="mb-4"></div> */}
+      <div className="container-max mt-4">
+      <div>
+        <Link href="/studio/create" className="icons"><FiArrowLeft className="h5 mb-0" /></Link>
+      </div>
         <div className="col-lg-12 my-5">
           <div className="row">
             <div className="col-lg-5">
               <h3 className="font-weight-bold">Create an NFT</h3>
               <p>Once your item is minted you will not be able to change any of its information.</p>
-              {/* <div>
-                <button className="remove-img-btn" id="remove-btn" onclick="removeImg()">
-                  <i className="fa fa-trash"></i>
+              <div>
+                {removeImage === true ? (
+                <button className="remove-img-btn" id="remove-btn" onClick={removeImg}>
+                  <BsTrash />
                 </button>
-                <div className="dragdrop justify-content-center mainbox" id="dragdrop">
-                  <section className="text-center" id="text-section">
-                    <input id="media" name="media" type="file" tabindex="-1" style="display: none;"
-                      accept="image/*" />
-                    <i className="fa fa-upload mb-3" style="font-size: 26px;"></i>
-                    <p className="mb-0" style="font-size: 16px;font-weight: 600;">Drag and drop media</p>
-                    <p className="mb-0" style="font-size: 14px;font-weight: 600;color: #007aff;">Browse files</p>
-                    <p className="mb-0" style="font-size: 14px;">Max size: 50MB</p>
-                    <p className="mb-0" style="font-size: 14px;">JPG, PNG, GIF, SVG, MP4</p>
-                  </section>
-                </div>
-
-              </div> */}
-              <div
-                id="dragdrop"
-                className={`drop-area ${highlight ? 'highlight' : ''}`}
-                onClick={() => fileInput.click()}
-                onDragEnter={handleDragEnter}
-                onDragOver={handleDragOver}
-                onDragLeave={handleDragLeave}
-                onDrop={handleDrop}
-              >
-                <input
-                  type="file"
-                  id="media"
-                  style={{ display: 'none' }}
-                  onChange={handleFileInputChange}
-                />
+                ):null}
                 <div
-                  id="preview-container"
-                  style={{ backgroundImage: `url(${previewImage})`, backgroundSize: 'cover' }}
-                ></div>
-                <div id="text-section" style={{ display: showTextSection ? 'block' : 'none' }}>
+                  id="dragdrop"
+                  className={`dragdrop justify-content-center mainbox drop-area ${highlight ? 'highlight' : ''}`}
+                  onClick={() => fileInput.current.click()}
+                  onDragEnter={handleDragEvents}
+                  onDragOver={handleDragEvents}
+                  onDragLeave={handleDragEvents}
+                  onDrop={handleDrop}
+                >
+                  <section className="text-center" id="text-section">
+                    <i className="fa fa-upload mb-3" style={{ fontSize: 26 }}></i>
+                    <p className="mb-0" style={{ fontSize: 16, fontWeight: 600 }}>Drag and drop media</p>
+                    <p className="mb-0" style={{ fontSize: 14, fontWeight: 600, color: '#007aff' }}>Browse files</p>
+                    <p className="mb-0" style={{ fontSize: 14 }}>Max size: 50MB</p>
+                    <p className="mb-0" style={{ fontSize: 14 }}>JPG, PNG, GIF, SVG, MP4</p>
+                    <input
+                      type="file"
+                      id="media"
+                      style={{ display: 'none' }}
+                      onChange={handleFileInputChange}
+                      ref={fileInput}
+                    />
+                  </section>
+                  <div
+                    id="preview-container"
+                    style={{ backgroundImage: 'url()', backgroundSize: 'cover' }}
+                  ></div>
+                  <div id="text-section" style={{ display: showTextSection ? 'block' : 'none' }}>
+                  </div>
                 </div>
-                <button id="remove-btn" style={{ display: showTextSection ? 'none' : 'block' }}>
-                  Remove
-                </button>
               </div>
+
             </div>
             <div className="col-lg-1">
             </div>

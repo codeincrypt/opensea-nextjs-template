@@ -408,10 +408,11 @@
     background: transparent;
     border: 0;
     cursor: pointer;
+    margin-right: 20px;
+    margin-top: 10px;
+    right: 0;
     position: absolute;
-    margin-bottom: -70px;
     z-index: 999;
-    display: none;
 }
 
 .mutedcard {
@@ -506,4 +507,19 @@
     position: relative;
     width: 100%;
     background-color: rgb(24, 104, 183);
+}
+
+.icons {
+    width: 40px !important;
+    height: 40px !important;
+    background: #eee;
+    text-align: center;
+    color: #000;
+    display: grid;
+    align-self: center;
+    border: 0;
+    cursor: pointer;
+    border-radius: 50px;
+    justify-content: center;
+    align-items: center;
 }

@@ -1,10 +1,13 @@
 import Link from "next/link";
+import { FiArrowLeft } from "react-icons/fi";
 
 export default function Deploycontract() {
   return (
     <>
-      <div className="mb-4"></div>
-      <div className="container-max">
+    <div className="container-max mt-4">
+      <div>
+        <Link href="/studio/create" className="icons"><FiArrowLeft className="h5 mb-0" /></Link>
+      </div>
         <div className="col-lg-12 my-5">
           <div className="row justify-content-center">
             <div className="col-lg-5">
