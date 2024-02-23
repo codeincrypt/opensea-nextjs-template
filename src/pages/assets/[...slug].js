@@ -14,6 +14,7 @@ import { LuListTodo } from "react-icons/lu";
 import { TbClockHour5 } from "react-icons/tb";
 import { PiArrowsDownUpBold } from "react-icons/pi";
 import Footer from "@/app/(primary)/component/footer";
+import { NextSeo } from "next-seo";
 
 export default function Page() {
   const router = useRouter();
@@ -28,17 +29,19 @@ export default function Page() {
   const [ethprice, setEthPrice] = useState();
   const [usdprice, setUSDPrice] = useState();
 
+  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
   const fetchNftDetails = async (slug) => {
-    let BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+    const options = { method: "GET", headers: { accept: "application/json" } };
     let url = `${BASE_URL}/api/v2/chain/${slug[0]}/contract/${slug[1]}/nfts/${slug[2]}`;
-    const response = await fetch(url);
+    const response = await fetch(url, options);
     const data = await response.json();
     setViewData(data.nft);
     let replacedImg = data.nft.image_url
       ? data.nft.image_url.replace("ikzttp.mypinata.cloud", "ipfs.io")
       : process.env.NEXT_PUBLIC_DEFAULT_NFT;
     setImageUrl(replacedImg);
-    fetchCollection(data.nft.collection)
+    fetchCollection(data.nft.collection);
     fetchBestOffer(data.nft.collection, slug[2]);
   };
 
@@ -46,59 +49,103 @@ export default function Page() {
     let url = `https://min-api.cryptocompare.com/data/price?fsym=${currency}&tsyms=USD`;
     const response = await fetch(url);
     const data = await response.json();
-    let usd = parseFloat(data.USD) * parseFloat(price)
+    let usd = parseFloat(data.USD) * parseFloat(price);
     setUSDPrice(usd.toFixed(2)); // data.USD;
   };
 
   const fetchBestOffer = async (slug, identifier) => {
-    let BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
     let url = `${BASE_URL}/api/v2/listings/collection/${slug}/nfts/${identifier}/best`;
-    const response = await fetch(url);
+    const options = { method: "GET", headers: { accept: "application/json" } };
+    const response = await fetch(url, options);
     const data = await response.json();
-    console.log("fetchBestOffer", data)
     if (Object.keys(data).length === 0 && data.constructor === Object) {
-      console.log('No Offer')
+      console.log("No Offer");
     } else {
       setOffer(data);
-      let price = convert(data.price.current.value, data.price.current.decimals)
-      convertToUSD(data.price.current.currency, price)
+      let price = convert(
+        data.price.current.value,
+        data.price.current.decimals
+      );
+      convertToUSD(data.price.current.currency, price);
       setEthPrice(price);
       setPriceAvailable(true);
     }
   };
 
   const fetchCollection = async (collection) => {
-    console.log("collection", collection)
-    let BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+    const options = { method: "GET", headers: { accept: "application/json" } };
     let url = `${BASE_URL}/api/v2/collections/${collection}`;
-    const response = await fetch(url);
+    const response = await fetch(url, options);
     const data = await response.json();
     setCollection(data);
   };
 
   const fetchItemActivity = async (slug) => {
-    console.log("collection", collection)
-    let BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+    const options = { method: "GET", headers: { accept: "application/json" } };
     let url = `${BASE_URL}/api/v2/events/chain/${slug[0]}/contract/${slug[1]}/nfts/${slug[2]}`;
-    const response = await fetch(url);
+    const response = await fetch(url, options);
     const data = await response.json();
     console.log("data", data);
     setActivity(data.asset_events);
   };
-
 
   useEffect(() => {
     if (!router.isReady) return;
     let slug = router.query.slug;
     setSlug(slug);
     fetchNftDetails(slug);
-    fetchItemActivity(slug)
+    fetchItemActivity(slug);
   }, [router.isReady]);
 
   const convert = (v, d) => parseFloat(v) / parseFloat(10 ** d);
 
   return (
     <>
+      <NextSeo
+        title={"ORCHIDS The International School - About Us"}
+        description={"Orchids International Schools is one of the Best schools in Bengaluru, Mumbai, Hyderabad, Pune, Kolkata, Chennai, Gurugram, Aurangabad, Nagpur and Tumkur,10,000+ students studying presently, 1100+ faculty helping to shape Kid’s future."}
+        openGraph={{
+          url: "https://www.orchidsinternationalschool.com/",
+          siteName: "Orchids",
+          type: "website",
+          title: "ORCHIDS The International School - About Us",
+          description: "Orchids International Schools is one of the Best schools in Bengaluru, Mumbai, Hyderabad, Pune, Kolkata, Chennai, Gurugram, Aurangabad, Nagpur and Tumkur,10,000+ students studying presently, 1100+ faculty helping to shape Kid’s future.",
+          images: [
+            {
+              url: "https://orchidsinternational-cms.s3.amazonaws.com/media/gallery/schema-logo.jpg",
+              width: 1080,
+              height: 1080,
+              alt: "Orchids",
+            },
+          ],
+        }}
+        twitter={{
+          handle: "https://twitter.com/Orchids_School",
+          site: "https://www.orchidsinternationalschool.com/",
+          cardType: "summary_large_image",
+        }}
+        additionalMetaTags={[
+          {
+            property: "twitter:title",
+            content:
+              "ORCHIDS The International School: Best CBSE and ICSE Schools in India",
+          },
+          {
+            property: "twitter:description",
+            content:
+              "With more than 75,000+ students enrolled across 25+ cities, Orchids International Schools are among the top award-winning CBSE schools in India, offering CBSE and ICSE curriculum.",
+          },
+          {
+            property: "twitter:image",
+            content:
+              "https://orchidsinternational-cms.s3.amazonaws.com/media/gallery/favicon-orchids-1.png",
+          },
+          {
+            property: "twitter:app:country",
+            content: "IN",
+          },
+        ]}
+      />
       <Header />
       <div className="container-max">
         <div className="row">
@@ -160,7 +207,9 @@ export default function Page() {
                 </div>
                 <div className="card-body">
                   <p>
-                    {collection?.description === "" ? "No description available" : collection?.description}
+                    {collection?.description === ""
+                      ? "No description available"
+                      : collection?.description}
                   </p>
                 </div>
               </div>
@@ -194,7 +243,9 @@ export default function Page() {
                       <p className="mb-0">Token Standard :</p>
                     </div>
                     <div className="col2 text-right">
-                      <p className="mb-0">{viewdata?.token_standard.toUpperCase()}</p>
+                      <p className="mb-0">
+                        {viewdata?.token_standard.toUpperCase()}
+                      </p>
                     </div>
                   </div>
                   <div className="flex">
@@ -202,7 +253,9 @@ export default function Page() {
                       <p className="mb-0">Chain :</p>
                     </div>
                     <div className="col2 text-right">
-                      <p className="mb-0">{collection?.contracts[0].chain.toUpperCase()}</p>
+                      <p className="mb-0">
+                        {collection?.contracts[0].chain.toUpperCase()}
+                      </p>
                     </div>
                   </div>
                   <div className="flex">
@@ -245,7 +298,9 @@ export default function Page() {
             </p>
 
             <div className="mt-4 mb-4">
-              <p><TbEye className="h5 mb-0" /> 2.9K views | 107 favorites</p>
+              <p>
+                <TbEye className="h5 mb-0" /> 2.9K views | 107 favorites
+              </p>
             </div>
             <div className="border-card mb-4">
               {/* <div className="card-header transparent">
@@ -277,10 +332,8 @@ export default function Page() {
                 <div className="card-body">
                   <p className="text-muted mb-2">Current price</p>
                   <h2 className="font-weight-bold">
-                    {ethprice}{" "}{offer?.price?.current?.currency}
-                    <span className="h6 text-muted ml-3">
-                      ${usdprice}
-                    </span>
+                    {ethprice} {offer?.price?.current?.currency}
+                    <span className="h6 text-muted ml-3">${usdprice}</span>
                   </h2>
 
                   <div className="row mt-3">
@@ -361,37 +414,41 @@ export default function Page() {
 
         <div className="row">
           <div className="col-lg-12">
-          <div className="border-card">
+            <div className="border-card">
               <div className="card-header">
                 <PiArrowsDownUpBold className="h5 mb-0" /> Item Activity
               </div>
               {Array.isArray(activity) && activity.length > 0 ? (
-              <div className="card-body p-0 m-0">
-                <table className="table p-3" >
-                <tr>
-                    <th>Event</th>
-                    <th>Price</th>
-                    <th>From</th>
-                    <th>To</th>
-                    <th>Date</th>
-                  </tr>
-                {activity?.map((item, index) => (
-                  <tr key={index}>
-                    <td> {item.order_type} </td>
-                    <td>{item.order_type} </td>
-                    <td>{item.from_address?.slice(0, 6)}...
-                        {item.from_address?.substr(-4, 4)}</td>
-                        <td>{item.to_address?.slice(0, 6)}...
-                        {item.to_address?.substr(-4, 4)}</td>
-                    <td>{item.event_timestamp}</td>
-                  </tr>
-									))}
-                </table>
-              </div>
+                <div className="card-body p-0 m-0">
+                  <table className="table p-3">
+                    <tr>
+                      <th>Event</th>
+                      <th>Price</th>
+                      <th>From</th>
+                      <th>To</th>
+                      <th>Date</th>
+                    </tr>
+                    {activity?.map((item, index) => (
+                      <tr key={index}>
+                        <td> {item.order_type} </td>
+                        <td>{item.order_type} </td>
+                        <td>
+                          {item.from_address?.slice(0, 6)}...
+                          {item.from_address?.substr(-4, 4)}
+                        </td>
+                        <td>
+                          {item.to_address?.slice(0, 6)}...
+                          {item.to_address?.substr(-4, 4)}
+                        </td>
+                        <td>{item.event_timestamp}</td>
+                      </tr>
+                    ))}
+                  </table>
+                </div>
               ) : (
-              <div className="card-body p-5 text-center">
-                <img src="https://testnets.opensea.io/static/images/empty-bids.svg" />
-              </div>
+                <div className="card-body p-5 text-center">
+                  <img src="https://testnets.opensea.io/static/images/empty-bids.svg" />
+                </div>
               )}
             </div>
           </div>
