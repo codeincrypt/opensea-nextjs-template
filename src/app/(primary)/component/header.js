@@ -1,13 +1,12 @@
 "use client";
 import { useState } from "react";
-import { FaRegUserCircle } from "react-icons/fa";
-import { MdOutlineShoppingCart } from "react-icons/md";
-import { MdWallet } from "react-icons/md";
 import Link from "next/link";
+import Modal from "react-bootstrap/Modal";
 
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import { FaRegUserCircle, FaArrowRight } from "react-icons/fa";
+import { MdOutlineShoppingCart, MdWallet } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
+import { IoSearch } from "react-icons/io5";
 
 export default function Header() {
   const [login, setLogin] = useState(false);
@@ -16,7 +15,7 @@ export default function Header() {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  
+
   return (
     <div id="header">
       <nav className="navbar navbar-expand-lg navbar-light nav-pad">
@@ -52,7 +51,7 @@ export default function Header() {
         <span className="mx-auto">
           <div className="search-box">
             <span className="icon">
-              <i className="fa fa-search"></i>
+              <IoSearch />
             </span>
             <input
               type="text"
@@ -95,18 +94,39 @@ export default function Header() {
       </nav>
 
       <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header className="float-right">
-        <RxCross2 />
-        </Modal.Header>
-        <Modal.Body className="p-4 text-center">
-          <img src="https://storage.googleapis.com/opensea-static/Logomark/Logomark-Blue.png" alt="opensea-test" 
-          style={{width:100}}
-          className="mb-3"
-          />
-          <h5>Connect to OpenSea</h5>
+        <Modal.Body>
+          <div className="text-right">
+            <RxCross2 onClick={handleClose} style={{ cursor: "pointer" }} />
+          </div>
+          <div className="p-4 text-center">
+            <img
+              src="https://storage.googleapis.com/opensea-static/Logomark/Logomark-Blue.png"
+              alt="opensea-test"
+              style={{ width: 100 }}
+              className="mb-3"
+            />
+            <h5>Connect to OpenSea</h5>
+
+            <div className="my-4">
+              <button className="btn main-btn btn-block">MetaMask</button>
+            </div>
+            <p>OR</p>
+            <div className="search-box mt-4">
+              <input
+                type="text"
+                name="search"
+                id="search"
+                className="search"
+                autoComplete="off"
+                placeholder="Continue with email"
+              />
+              <span className="right">
+                <FaArrowRight />
+              </span>
+            </div>
+          </div>
         </Modal.Body>
       </Modal>
-
     </div>
   );
 }

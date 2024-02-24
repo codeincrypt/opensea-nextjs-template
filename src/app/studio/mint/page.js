@@ -3,13 +3,14 @@ import { useRef, useState } from "react";
 import Link from "next/link";
 import { FiArrowLeft } from "react-icons/fi";
 import { BsTrash } from "react-icons/bs";
+import { HiOutlineUpload } from "react-icons/hi";
 
+import "./../../import.css";
 export default function Mint() {
   const fileInput = useRef(null);
 
   const [removeImage, setRemoveImage] = useState(false);
   const [highlight, setHighlight] = useState(false);
-  const [previewImage, setPreviewImage] = useState(null);
   const [showTextSection, setShowTextSection] = useState(true);
 
   function removeImg() {
@@ -28,7 +29,6 @@ export default function Mint() {
         reader.onload = () => {
           const previewContainer = document.getElementById("dragdrop");
           const textSection = document.getElementById("text-section");
-          const removeBtn = document.getElementById("remove-btn");
 
           previewContainer.style.backgroundImage = `url(${reader.result})`;
           previewContainer.style.backgroundSize = "cover";
@@ -48,18 +48,25 @@ export default function Mint() {
   }
 
   function handleDragEvents(e) {
+    setHighlight(true);
     e.preventDefault();
     e.stopPropagation();
   }
 
   function handleDrop(e) {
+    e.preventDefault();
     const files = e.dataTransfer.files;
     handleFiles(files);
   }
 
+  function handleDragLeave(e){
+    setHighlight(false);
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
   return (
     <>
-      {/* <div className="mb-4"></div> */}
       <div className="container-max mt-4">
       <div>
         <Link href="/studio/create" className="icons"><FiArrowLeft className="h5 mb-0" /></Link>
@@ -81,11 +88,11 @@ export default function Mint() {
                   onClick={() => fileInput.current.click()}
                   onDragEnter={handleDragEvents}
                   onDragOver={handleDragEvents}
-                  onDragLeave={handleDragEvents}
+                  onDragLeave={handleDragLeave}
                   onDrop={handleDrop}
                 >
                   <section className="text-center" id="text-section">
-                    <i className="fa fa-upload mb-3" style={{ fontSize: 26 }}></i>
+                    <span className="fa fa-upload mb-3" style={{ fontSize: 30 }}><HiOutlineUpload /> </span>
                     <p className="mb-0" style={{ fontSize: 16, fontWeight: 600 }}>Drag and drop media</p>
                     <p className="mb-0" style={{ fontSize: 14, fontWeight: 600, color: '#007aff' }}>Browse files</p>
                     <p className="mb-0" style={{ fontSize: 14 }}>Max size: 50MB</p>
