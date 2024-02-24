@@ -5,8 +5,18 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import { MdWallet } from "react-icons/md";
 import Link from "next/link";
 
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import { RxCross2 } from "react-icons/rx";
+
 export default function Header() {
   const [login, setLogin] = useState(false);
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  
   return (
     <div id="header">
       <nav className="navbar navbar-expand-lg navbar-light nav-pad">
@@ -69,7 +79,7 @@ export default function Header() {
             </>
           ) : (
             <>
-              <button className="btn main-btn">
+              <button className="btn main-btn" onClick={handleShow}>
                 <MdWallet className="h4 mb-0" /> Login
               </button>
               <Link className="btn main-btn" href="/account/created">
@@ -83,6 +93,20 @@ export default function Header() {
           </button>
         </span>
       </nav>
+
+      <Modal show={show} onHide={handleClose} centered>
+        <Modal.Header className="float-right">
+        <RxCross2 />
+        </Modal.Header>
+        <Modal.Body className="p-4 text-center">
+          <img src="https://storage.googleapis.com/opensea-static/Logomark/Logomark-Blue.png" alt="opensea-test" 
+          style={{width:100}}
+          className="mb-3"
+          />
+          <h5>Connect to OpenSea</h5>
+        </Modal.Body>
+      </Modal>
+
     </div>
   );
 }
