@@ -216,7 +216,7 @@
     color: #222;
     border: 0;
     border-radius: 10px !important;
-    padding: 10px 25px !important;
+    padding: 10px 15px !important;
     margin:0px 5px ;
 }
 
@@ -345,6 +345,7 @@
     cursor: pointer;
     transition: background-color 0.25s ease-in-out 0s, border-color 0.25s ease-in-out 0s;
     overflow: hidden;
+    background-position: center;
 }
 
 #dragdrop:hover {
@@ -522,4 +523,8 @@
     border-radius: 50px;
     justify-content: center;
     align-items: center;
+}
+
+.rounded-os {
+    border-radius: 0.75rem !important;
 }

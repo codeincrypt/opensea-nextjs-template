@@ -18,6 +18,7 @@ export default function Mint() {
     const previewContainer = document.getElementById("dragdrop");
     textSection.style.display = "";
     previewContainer.style.backgroundImage = "url()";
+    setRemoveImage(false)
   }
 
   function handleFiles(files) {

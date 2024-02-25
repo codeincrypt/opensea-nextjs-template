@@ -14,30 +14,39 @@ export default function Collection() {
   const [datalist, setDatalist] = useState([]);
   const [collection, setCollection] = useState();
   const [details, setDetails] = useState();
+  const [collectionData, setCollectionData] = useState({
+    fee:0
+  });
+  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 
   const fetchData = async (slug) => {
-    let BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
     let url = `${BASE_URL}/api/v2/collection/${slug}/nfts`
-    const response = await fetch(url);
+    const options = { method: "GET", headers: { mode: 'no-cors'
+,     "Access-Control-Allow-Origin": "*",accept: "application/json" } };
+    const response = await fetch(url, options);
     const data = await response.json();
     setDatalist(data.nfts);
   };
 
   const fetchCollectionDetails = async (slug) => {
-    let BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
     let url = `${BASE_URL}/api/v2/collections/${slug}`
-    const response = await fetch(url);
+    const options = { method: "GET", headers: { mode: 'no-cors', "Access-Control-Allow-Origin": "*",accept: "application/json" } };
+    const response = await fetch(url, options);
     const data = await response.json();
     if(data.errors){
       show404Page(true)
     }
     setCollection(data);
+    let obj = {
+      fee : data.fees[0].fee
+    }
+    setCollectionData(obj)
   };
 
   const fetchCollectionData = async (slug) => {
-    let BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
     let url = `${BASE_URL}/api/v2/collections/${slug}/stats`
-    const response = await fetch(url);
+    const options = { method: "GET", headers: { "Access-Control-Allow-Origin": "*",accept: "application/json" } };
+    const response = await fetch(url, options);
     const data = await response.json();
     setDetails(data);
   };
@@ -99,7 +108,7 @@ export default function Collection() {
           <p>
             <span className="text-muted mr-2">Items <b>{collection?.total_supply}</b> </span> ·
             <span className="text-muted mx-2">Created <b>{collection?.created_date}</b> </span> ·
-            <span className="text-muted mx-2">Creator earnings <b>{collection?.fees[0].fee}</b> </span> ·
+            <span className="text-muted mx-2">Creator earnings <b>{collectionData.fee}</b> </span> ·
             <span className="text-muted mx-2">Chain <b>{collection?.contracts[0].chain}</b> </span>
           </p>
         </div>
