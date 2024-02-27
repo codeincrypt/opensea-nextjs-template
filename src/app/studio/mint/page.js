@@ -161,6 +161,8 @@ export default function Mint() {
                 <p>Traits describe attributes of your item. They appear as filters inside your collection page
                   and are also listed out inside your item page.</p>
               </div>
+              
+              <button className="btn btn-primary px-4 py-2 mt-3" style={{fontSize: 16}}>Create</button>
             </div>
           </div>
         </div>
