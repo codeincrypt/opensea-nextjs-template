@@ -1,19 +1,12 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { getAllCollections } from "@/request/request";
 
 export default function Home() {
 	const [datalist, setDatalist] = useState([]);
 
-  const fetchDetails = async () => {
-		let BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
-		let url = `${BASE_URL}/api/v2/collections`
-		const options = { method: 'GET', headers: { accept: 'application/json' } };
-		const response = await fetch(url, options);
-		const data = await response.json();
-    console.log('data', data.collections);
-		setDatalist(data.collections);
-	}
+  const fetchDetails = async () => setDatalist(await getAllCollections());
 
 	useEffect(() => {
 		fetchDetails()
@@ -25,7 +18,7 @@ export default function Home() {
         <div className="col-lg-12 mb-5">
           <h3 className="mb-3 font-weight-bold">Top NFTs</h3>
           <div className="row">
-          {datalist.map((item, index) => (
+          {datalist?.map((item, index) => (
               <Link className="col4 card" href={`/collection/${item.collection}`} key={index}>
                 <img src={`${item.image_url === "" ? process.env.NEXT_PUBLIC_DEFAULT_NFT : item.image_url}`} alt="" />
                 <span className="p-3">

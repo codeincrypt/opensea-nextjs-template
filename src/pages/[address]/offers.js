@@ -9,8 +9,10 @@ export default function Created() {
   const router = useRouter();
   const [slug, setSlug] = useState();
   const [profile, setProfile] = useState();
+  // eslint-disable-next
   const [datalist, setDatalist] = useState([]);
 
+  // eslint-disable-next
   const fetchData = async (chain, address) => {
     let BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
     let url = `${BASE_URL}/api/v2/chain/${chain}/account/${address}/nfts`;

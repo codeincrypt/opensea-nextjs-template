@@ -15,6 +15,7 @@ import { TbClockHour5 } from "react-icons/tb";
 import { PiArrowsDownUpBold } from "react-icons/pi";
 import Footer from "@/app/(primary)/component/footer";
 import { NextSeo } from "next-seo";
+import { getConvertToUSD, getItemActivity, getNftView } from "@/request/request";
 
 export default function Page() {
   const router = useRouter();
@@ -30,32 +31,26 @@ export default function Page() {
   const [usdprice, setUSDPrice] = useState();
 
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+  const NEXT_PUBLIC_OPENSEA_APIKEY = process.env.NEXT_PUBLIC_OPENSEA_APIKEY;
 
   const fetchNftDetails = async (slug) => {
-    const options = { method: "GET", headers: { accept: "application/json" } };
-    let url = `${BASE_URL}/api/v2/chain/${slug[0]}/contract/${slug[1]}/nfts/${slug[2]}`;
-    const response = await fetch(url, options);
-    const data = await response.json();
+    const data = await getNftView(slug);
     setViewData(data.nft);
-    let replacedImg = data.nft.image_url
-      ? data.nft.image_url.replace("ikzttp.mypinata.cloud", "ipfs.io")
-      : process.env.NEXT_PUBLIC_DEFAULT_NFT;
+    let replacedImg = data.nft.image_url ? data.nft.image_url.replace("ikzttp.mypinata.cloud", "ipfs.io") : process.env.NEXT_PUBLIC_DEFAULT_NFT;
     setImageUrl(replacedImg);
     fetchCollection(data.nft.collection);
     fetchBestOffer(data.nft.collection, slug[2]);
   };
 
   const convertToUSD = async (currency, price) => {
-    let url = `https://min-api.cryptocompare.com/data/price?fsym=${currency}&tsyms=USD`;
-    const response = await fetch(url);
-    const data = await response.json();
+    let data = await getConvertToUSD(currency)
     let usd = parseFloat(data.USD) * parseFloat(price);
     setUSDPrice(usd.toFixed(2)); // data.USD;
   };
 
   const fetchBestOffer = async (slug, identifier) => {
     let url = `${BASE_URL}/api/v2/listings/collection/${slug}/nfts/${identifier}/best`;
-    const options = { method: "GET", headers: { accept: "application/json" } };
+    const options = { method: "GET", headers: { accept: "application/json", "x-api-key": NEXT_PUBLIC_OPENSEA_APIKEY } };
     const response = await fetch(url, options);
     const data = await response.json();
     if (Object.keys(data).length === 0 && data.constructor === Object) {
@@ -73,7 +68,7 @@ export default function Page() {
   };
 
   const fetchCollection = async (collection) => {
-    const options = { method: "GET", headers: { accept: "application/json" } };
+    const options = { method: "GET", headers: { accept: "application/json", "x-api-key": NEXT_PUBLIC_OPENSEA_APIKEY } };
     let url = `${BASE_URL}/api/v2/collections/${collection}`;
     const response = await fetch(url, options);
     const data = await response.json();
@@ -81,11 +76,7 @@ export default function Page() {
   };
 
   const fetchItemActivity = async (slug) => {
-    const options = { method: "GET", headers: { accept: "application/json" } };
-    let url = `${BASE_URL}/api/v2/events/chain/${slug[0]}/contract/${slug[1]}/nfts/${slug[2]}`;
-    const response = await fetch(url, options);
-    const data = await response.json();
-    console.log("data", data);
+    const data = await getItemActivity(slug)
     setActivity(data.asset_events);
   };
 
@@ -102,43 +93,41 @@ export default function Page() {
   return (
     <>
       <NextSeo
-        title={"ORCHIDS The International School - About Us"}
-        description={"Orchids International Schools is one of the Best schools in Bengaluru, Mumbai, Hyderabad, Pune, Kolkata, Chennai, Gurugram, Aurangabad, Nagpur and Tumkur,10,000+ students studying presently, 1100+ faculty helping to shape Kid’s future."}
+        title={collection?.name}
+        description={viewdata?.description}
         openGraph={{
-          url: "https://www.orchidsinternationalschool.com/",
-          siteName: "Orchids",
+          url: "https://www.opensea.io/",
+          siteName: "Opensea",
           type: "website",
-          title: "ORCHIDS The International School - About Us",
-          description: "Orchids International Schools is one of the Best schools in Bengaluru, Mumbai, Hyderabad, Pune, Kolkata, Chennai, Gurugram, Aurangabad, Nagpur and Tumkur,10,000+ students studying presently, 1100+ faculty helping to shape Kid’s future.",
+          title: collection?.name,
+          description: viewdata?.description,
           images: [
             {
-              url: "https://orchidsinternational-cms.s3.amazonaws.com/media/gallery/schema-logo.jpg",
+              url: image_url,
               width: 1080,
               height: 1080,
-              alt: "Orchids",
+              alt: "Opensea",
             },
           ],
         }}
         twitter={{
-          handle: "https://twitter.com/Orchids_School",
-          site: "https://www.orchidsinternationalschool.com/",
+          handle: "https://opensea.io",
+          site: "https://opensea.io/",
           cardType: "summary_large_image",
         }}
         additionalMetaTags={[
           {
             property: "twitter:title",
-            content:
-              "ORCHIDS The International School: Best CBSE and ICSE Schools in India",
+            content: "Opensea",
           },
           {
             property: "twitter:description",
             content:
-              "With more than 75,000+ students enrolled across 25+ cities, Orchids International Schools are among the top award-winning CBSE schools in India, offering CBSE and ICSE curriculum.",
+              "Opensea.",
           },
           {
             property: "twitter:image",
-            content:
-              "https://orchidsinternational-cms.s3.amazonaws.com/media/gallery/favicon-orchids-1.png",
+            content: image_url,
           },
           {
             property: "twitter:app:country",
@@ -171,7 +160,7 @@ export default function Page() {
                   <BsJustifyLeft className="h5 mb-0" /> Description
                 </div>
                 <div className="card-body">
-                  <p>{viewdata?.description}</p>
+                  <p style={{ wordWrap: "break-word" }}>{viewdata?.description}</p>
                 </div>
               </div>
               <div className="border-card mb-4 mt-4">

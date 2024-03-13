@@ -75,30 +75,30 @@ export default function Footer() {
           <div className="col-lg-3">
             <div className="ml-5">
               <h5 className="ml-3">Marketplace</h5>
-              <ul class="nav flex-column">
-                <li class="nav-item">
-                  <Link href="/" class="nav-link text-white">
+              <ul className="nav flex-column">
+                <li className="nav-item">
+                  <Link href="/" className="nav-link text-white">
                   Art
                   </Link>
                 </li>
-                <li class="nav-item">
-                  <Link href="/" class="nav-link text-white">
+                <li className="nav-item">
+                  <Link href="/" className="nav-link text-white">
                   Gaming
                   </Link>
                 </li>
-                <li class="nav-item">
-                  <Link href="/" class="nav-link text-white">
+                <li className="nav-item">
+                  <Link href="/" className="nav-link text-white">
                   Memberships
                   </Link>
                 </li>
-                <li class="nav-item">
-                  <Link href="/" class="nav-link text-white">PFPs</Link>
+                <li className="nav-item">
+                  <Link href="/" className="nav-link text-white">PFPs</Link>
                 </li>
-                <li class="nav-item">
-                  <Link href="/" class="nav-link text-white">Photography</Link>
+                <li className="nav-item">
+                  <Link href="/" className="nav-link text-white">Photography</Link>
                 </li>
-                <li class="nav-item">
-                  <Link href="/" class="nav-link text-white">Music</Link>
+                <li className="nav-item">
+                  <Link href="/" className="nav-link text-white">Music</Link>
                 </li>
               </ul>
             </div>
@@ -106,30 +106,30 @@ export default function Footer() {
           <div className="col-lg-3">
             <div className="ml-5">
               <h5 className="ml-3">My Account</h5>
-              <ul class="nav flex-column">
-                <li class="nav-item">
-                  <Link href="/" class="nav-link text-white">
+              <ul className="nav flex-column">
+                <li className="nav-item">
+                  <Link href="/" className="nav-link text-white">
                   Profile
                   </Link>
                 </li>
-                <li class="nav-item">
-                  <Link href="/" class="nav-link text-white">
+                <li className="nav-item">
+                  <Link href="/" className="nav-link text-white">
                   Favorites
                   </Link>
                 </li>
-                <li class="nav-item">
-                  <Link href="/" class="nav-link text-white">
+                <li className="nav-item">
+                  <Link href="/" className="nav-link text-white">
                   Watchlist
                   </Link>
                 </li>
-                <li class="nav-item">
-                  <Link href="/" class="nav-link text-white">Studio</Link>
+                <li className="nav-item">
+                  <Link href="/" className="nav-link text-white">Studio</Link>
                 </li>
-                <li class="nav-item">
-                  <Link href="/" class="nav-link text-white">OpenSea Pro</Link>
+                <li className="nav-item">
+                  <Link href="/" className="nav-link text-white">OpenSea Pro</Link>
                 </li>
-                <li class="nav-item">
-                  <Link href="/" class="nav-link text-white">Settings</Link>
+                <li className="nav-item">
+                  <Link href="/" className="nav-link text-white">Settings</Link>
                 </li>
               </ul>
             </div>
@@ -137,36 +137,36 @@ export default function Footer() {
           <div className="col-lg-3">
             <div className="ml-5">
               <h5 className="ml-3">Resources</h5>
-              <ul class="nav flex-column">
-                <li class="nav-item">
-                  <Link href="/" class="nav-link text-white">
+              <ul className="nav flex-column">
+                <li className="nav-item">
+                  <Link href="/" className="nav-link text-white">
                   Blog
                   </Link>
                 </li>
-                <li class="nav-item">
-                  <Link href="/" class="nav-link text-white">
+                <li className="nav-item">
+                  <Link href="/" className="nav-link text-white">
                   Learn
                   </Link>
                 </li>
-                <li class="nav-item">
-                  <Link href="/" class="nav-link text-white">
+                <li className="nav-item">
+                  <Link href="/" className="nav-link text-white">
                   Help center
                   </Link>
                 </li>
-                <li class="nav-item">
-                  <Link href="/" class="nav-link text-white">Community standards</Link>
+                <li className="nav-item">
+                  <Link href="/" className="nav-link text-white">Community standards</Link>
                 </li>
-                <li class="nav-item">
-                  <Link href="/" class="nav-link text-white">Taxes</Link>
+                <li className="nav-item">
+                  <Link href="/" className="nav-link text-white">Taxes</Link>
                 </li>
-                <li class="nav-item">
-                  <Link href="/" class="nav-link text-white">Partners</Link>
+                <li className="nav-item">
+                  <Link href="/" className="nav-link text-white">Partners</Link>
                 </li>
-                <li class="nav-item">
-                  <Link href="/" class="nav-link text-white">Developer platform</Link>
+                <li className="nav-item">
+                  <Link href="/" className="nav-link text-white">Developer platform</Link>
                 </li>
-                <li class="nav-item">
-                  <Link href="/" class="nav-link text-white">Platform status</Link>
+                <li className="nav-item">
+                  <Link href="/" className="nav-link text-white">Platform status</Link>
                 </li>
               </ul>
             </div>
