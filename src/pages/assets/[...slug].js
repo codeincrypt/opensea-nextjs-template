@@ -15,7 +15,7 @@ import { TbClockHour5 } from "react-icons/tb";
 import { PiArrowsDownUpBold } from "react-icons/pi";
 import Footer from "@/app/(primary)/component/footer";
 import { NextSeo } from "next-seo";
-import { getConvertToUSD, getItemActivity, getNftView } from "@/request/request";
+import { getBestOffer, getCollectionView, getConvertToUSD, getItemActivity, getNftView } from "@/request/request";
 
 export default function Page() {
   const router = useRouter();
@@ -29,9 +29,6 @@ export default function Page() {
   const [offer, setOffer] = useState();
   const [ethprice, setEthPrice] = useState();
   const [usdprice, setUSDPrice] = useState();
-
-  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-  const NEXT_PUBLIC_OPENSEA_APIKEY = process.env.NEXT_PUBLIC_OPENSEA_APIKEY;
 
   const fetchNftDetails = async (slug) => {
     const data = await getNftView(slug);
@@ -49,10 +46,7 @@ export default function Page() {
   };
 
   const fetchBestOffer = async (slug, identifier) => {
-    let url = `${BASE_URL}/api/v2/listings/collection/${slug}/nfts/${identifier}/best`;
-    const options = { method: "GET", headers: { accept: "application/json", "x-api-key": NEXT_PUBLIC_OPENSEA_APIKEY } };
-    const response = await fetch(url, options);
-    const data = await response.json();
+    let data = await getBestOffer(slug, identifier)
     if (Object.keys(data).length === 0 && data.constructor === Object) {
       console.log("No Offer");
     } else {
@@ -68,10 +62,7 @@ export default function Page() {
   };
 
   const fetchCollection = async (collection) => {
-    const options = { method: "GET", headers: { accept: "application/json", "x-api-key": NEXT_PUBLIC_OPENSEA_APIKEY } };
-    let url = `${BASE_URL}/api/v2/collections/${collection}`;
-    const response = await fetch(url, options);
-    const data = await response.json();
+    const data = await getCollectionView(collection)
     setCollection(data);
   };
 

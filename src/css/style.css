@@ -181,7 +181,6 @@
     border-color: transparent;
     background: transparent;
     transition: background-color 0.2s cubic-bezier(0.05, 0, 0.2, 1) 0s;
-    /* background-color: rgba(18, 18, 18, 0.08); */
 }
 
 .item-wrapper {
@@ -261,6 +260,10 @@
     box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 16px;
 }
 
+.card img {
+    aspect-ratio: 1;
+}
+
 .card img:hover {
     transform: scale(1.1);
     transition: ease-in 0.3s;
@@ -323,10 +326,7 @@
     width: 100%;
     background-size: cover;
 }
-/* 
-.collection-revert {
-    
-} */
+
 .mainbox {
     max-width: 600px;
     min-height: unset;
@@ -467,10 +467,6 @@
     border-radius: 0.75rem !important;
     padding: 10px 20px 10px 20px !important;
 }
-.card-header {
-    background: transparent !important;
-}
-
 .bg-muted {
     background: rgba(18,18,18,0.04);
     border-radius: 6px;
@@ -479,6 +475,7 @@
 }
 
 .card-header {
+    background: transparent !important;
     font-size: 16px !important;
     font-weight: 600 !important;
     line-height: 24px !important;

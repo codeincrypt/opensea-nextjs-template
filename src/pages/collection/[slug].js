@@ -5,12 +5,11 @@ import { useRouter } from "next/router";
 import "../../app/import.css";
 import Header from "@/app/(primary)/component/header";
 import Footer from "@/app/(primary)/component/footer";
-import { getCollectionData, getCollectionView } from "@/request/request";
+import { getCollectionData, getCollectionNft, getCollectionView } from "@/request/request";
 
 export default function Collection() {
 
   const router = useRouter()
-  const [slug, setSlug] = useState();
   const [show404, show404Page] = useState(false);
   const [datalist, setDatalist] = useState([]);
   const [collection, setCollection] = useState();
@@ -18,16 +17,11 @@ export default function Collection() {
   const [collectionData, setCollectionData] = useState({
     fee:0
   });
-  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
-  const NEXT_PUBLIC_OPENSEA_APIKEY = process.env.NEXT_PUBLIC_OPENSEA_APIKEY;
 
-  const fetchData = async (slug) => setDatalist(await getCollectionView(slug));
+  const fetchData = async (slug) => setDatalist(await getCollectionNft(slug));
 
   const fetchCollectionDetails = async (slug) => {
-    let url = `${BASE_URL}/api/v2/collections/${slug}`
-    const options = { method: "GET", headers: { accept: "application/json", "x-api-key": NEXT_PUBLIC_OPENSEA_APIKEY } };
-    const response = await fetch(url, options);
-    const data = await response.json();
+    const data = await getCollectionView(slug)
     if(data.errors){
       show404Page(true)
     }
@@ -43,11 +37,10 @@ export default function Collection() {
   useEffect(() => {
 		if (!router.isReady) return;
 		let slug = router.query.slug
-		setSlug(slug)
     fetchCollectionDetails(slug);
 		fetchData(slug)
     fetchCollectionData(slug)
-	}, [fetchCollectionData, fetchData, fetchCollectionDetails, router.isReady]);
+	}, [router.isReady]);
 
   return (
     <>
@@ -104,11 +97,11 @@ export default function Collection() {
 
         <div className="flex" id="nft-list">
           {datalist?.map((item, index) => (
-            <Link className="col5 card mb-4" href={`/assets/${collection?.contracts[0].chain}/${item.contract}/${item.identifier}`} key={index}>
+            <Link className="col5 card mb-4" href={`/assets/${collection?.contracts[0].chain}/${item.contract}/${item.identifier}`} key={item.name}>
               <div style={{backgroundImage:`url(${item?.image_url === null ? process.env.NEXT_PUBLIC_DEFAULT_NFT : item?.image_url?.replace('ikzttp.mypinata.cloud', 'ipfs.io')})`, width: '100%',backgroundSize: 'cover',height: 220}}></div>
               <span className="p-3">
                 <h6>{item.name === null ? "Unnamed" : item.name} - #{item.identifier}</h6>
-                <h5 className="mt-3 font-weight-bold"></h5>
+                {/* <h5 className="mt-3 font-weight-bold"></h5> */}
               </span>
             </Link>
           ))}

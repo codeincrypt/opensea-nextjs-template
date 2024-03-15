@@ -19,7 +19,7 @@ export default function Home() {
           <h3 className="mb-3 font-weight-bold">Top NFTs</h3>
           <div className="row">
           {datalist?.map((item, index) => (
-              <Link className="col4 card" href={`/collection/${item.collection}`} key={index}>
+              <Link className="col4 card nftcard" href={`/collection/${item.collection}`} key={item.name}>
                 <img src={`${item.image_url === "" ? process.env.NEXT_PUBLIC_DEFAULT_NFT : item.image_url}`} alt="" />
                 <span className="p-3">
                   <h5 className="font-weight-bold h6">{item.name}</h5>
